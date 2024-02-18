@@ -7,7 +7,7 @@ public class BookShelve {
     String code;
     ArrayList<Book> listBooks;
 
-    public BookShelve(TypeBookShelves type, String code, ArrayList<Book> listBooks) {
+    public BookShelve(TypeBookShelves type, String code) {
         this.type = type;
         this.code = code;
         this.listBooks = new ArrayList<>();

@@ -1,7 +1,9 @@
 package cova.assingment.secondexercise;
+import cova.assingment.thirdexercise.DatabaseManager;
+
 import java.util.Scanner;
 
-public class LibraryManagement {
+public class LibraryManager {
     static boolean isRunning = true;
     static Scanner sc = new Scanner(System.in);
 
@@ -21,7 +23,8 @@ public class LibraryManagement {
         System.out.println("2. Create a Book");
         System.out.println("3. List all books");
         System.out.println("4. List all bookshelves");
-        System.out.println("5. Exit");
+        System.out.println("5. Save in database");
+        System.out.println("6. Exit");
     }
 
     public static void options(int option) {
@@ -40,6 +43,9 @@ public class LibraryManagement {
                 library.printBookShelves();
                 break;
             case 5:
+                saveInDatabase();
+                break;
+            case 6:
                 isRunning = false;
                 break;
             default:
@@ -68,7 +74,7 @@ public class LibraryManagement {
 
         String code = sc.next();
 
-        BookShelve bookShelve = new BookShelve(typeBookShelves, code, null);
+        BookShelve bookShelve = new BookShelve(typeBookShelves, code);
 
         library.addBookShelves(bookShelve);
 
@@ -104,7 +110,17 @@ public class LibraryManagement {
         for (BookShelve bookShelve : library.getListBookShelves()) {
             System.out.println("BookShavle code: " + bookShelve.getCode() + ", type: " + bookShelve.getType());
             for (Book book : bookShelve.getListBooks()) {
-                System.out.println("Book title: " + book.getTitle() + "Book author: " + book.getAuthor() + "Book editorial: " + book.getEditorial() + "Book year: " + book.getYear());
+                System.out.println("Book title: " + book.getTitle() + ", author: " + book.getAuthor() + ", editorial: " + book.getEditorial() + ", year: " + book.getYear());
+            }
+        }
+    }
+
+    public static void saveInDatabase() {
+        DatabaseManager db = new DatabaseManager();
+        for (BookShelve bookShelve : library.getListBookShelves()) {
+            db.saveBookShelve(bookShelve.getCode(), bookShelve.getType());
+            for (Book book : bookShelve.getListBooks()) {
+                db.saveBook(book.getTitle(), book.getAuthor(), book.getYear(), book.getEditorial(), bookShelve.getCode());
             }
         }
     }
