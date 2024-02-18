@@ -34,7 +34,7 @@ public class Main {
                 System.out.println("Factorial of " + n + " is " + Operations.factorial(n));
                 break;
             case "c":
-                System.out.println("exit");
+                isRunning = false;
                 break;
             default:
                 System.out.println("Invalid option");
