@@ -1,14 +1,21 @@
 package cova.assingment.thirdexercise;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
+
 public class MySqlConnection {
 
-    String DB_URL = "jdbc:mysql://localhost/db_library";
-    String USER = "root";
-    String PASS = "";
+
+
 
     Connection conn;
 
     public MySqlConnection() {
+        Dotenv dotenv = Dotenv.load();
+
+        String DB_URL = dotenv.get("DB_URL");
+        String USER = dotenv.get("DB_USER");
+        String PASS = dotenv.get("DB_PASS");
+
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             createTables();
