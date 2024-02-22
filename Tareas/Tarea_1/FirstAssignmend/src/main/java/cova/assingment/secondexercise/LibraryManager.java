@@ -23,8 +23,11 @@ public class LibraryManager {
         System.out.println("2. Create a Book");
         System.out.println("3. List all books");
         System.out.println("4. List all bookshelves");
-        System.out.println("5. Save in database");
-        System.out.println("6. Exit");
+        System.out.println("5. remove book");
+        System.out.println("6. remove bookshelve");
+        System.out.println("7. Save in database");
+        System.out.println("8. Show Library");
+        System.out.println("9. Exit");
     }
 
     public static void options(int option) {
@@ -43,9 +46,18 @@ public class LibraryManager {
                 library.printBookShelves();
                 break;
             case 5:
-                saveInDatabase();
+                searchBookShelveForDeleteBook();
                 break;
             case 6:
+                deleteBookShelve();
+                break;
+            case 7:
+                saveInDatabase();
+                break;
+            case 8:
+                showLibrary();
+                break;
+            case 9:
                 isRunning = false;
                 break;
             default:
@@ -106,15 +118,65 @@ public class LibraryManager {
         }
     }
 
-    public static void listAllBooks() {
-        for (BookShelve bookShelve : library.getListBookShelves()) {
-            System.out.println("BookShavle code: " + bookShelve.getCode() + ", type: " + bookShelve.getType());
-            for (Book book : bookShelve.getListBooks()) {
-                System.out.println("Book title: " + book.getTitle() + ", author: " + book.getAuthor() + ", editorial: " + book.getEditorial() + ", year: " + book.getYear());
+    public static void searchBookShelveForDeleteBook(){
+
+        System.out.println("Insert code of the BookShelve");
+        library.printBookShelves();
+        System.out.print("Code bookshelve: ");
+        String codeBookShelve = sc.next();
+
+        for (BookShelve bookShelve : library.getListBookShelves()){
+            if(bookShelve.getCode().equals(codeBookShelve)){
+                deleteBook(bookShelve);
+            }
+        }
+
+    }
+
+
+
+    public static void deleteBook(BookShelve bookShelve){
+        System.out.println("Insert title of the book, you want to delete");
+        bookShelve.printBooks();
+        System.out.print("Title book: ");
+        String titleBook = sc.next();
+
+        for (Book book : bookShelve.getListBooks()){
+            if(book.getTitle().equals(titleBook)){
+                bookShelve.deleteBook(book);
+                return;
+            }
+        }
+
+    }
+
+    public static void deleteBookShelve(){
+        System.out.println("Insert code of the BookShelve");
+        library.printBookShelves();
+        System.out.print("Code bookshelve: ");
+        String codeBookShelve = sc.next();
+
+        for (BookShelve bookShelve : library.getListBookShelves()){
+            if(bookShelve.getCode().equals(codeBookShelve)){
+                library.removeBookShelves(bookShelve);
+                return;
             }
         }
     }
 
+    public static void listAllBooks() {
+        for (BookShelve bookShelve : library.getListBookShelves()) {
+            System.out.println("***********************************");
+            System.out.println("BookShavle code: " + bookShelve.getCode() + ", type: " + bookShelve.getType());
+            for (Book book : bookShelve.getListBooks()) {
+                System.out.println("Book title: " + book.getTitle() + ", author: " + book.getAuthor() + ", editorial: " + book.getEditorial() + ", year: " + book.getYear());
+            }
+            System.out.println();
+        }
+    }
+
+
+    //Database method
     public static void saveInDatabase() {
         DatabaseManager db = new DatabaseManager();
         for (BookShelve bookShelve : library.getListBookShelves()) {
@@ -123,5 +185,12 @@ public class LibraryManager {
                 db.saveBook(book.getTitle(), book.getAuthor(), book.getYear(), book.getEditorial(), bookShelve.getCode());
             }
         }
+
+    }
+
+    //Database method
+    public static void showLibrary(){
+        DatabaseManager db = new DatabaseManager();
+        db.showLibrary();
     }
 }

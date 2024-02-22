@@ -42,6 +42,14 @@ public class Library {
         listBookShelves.add(bookShelve);
     }
 
+    public void removeBookShelves(BookShelve bookShelve) {
+        if (bookShelve.getListBooks().isEmpty()){
+            listBookShelves.remove(bookShelve);
+            return;
+        }
+        System.out.println("The BookShelve can't be deleted, because has books");
+    }
+
     public void printBookShelves() {
         for (BookShelve bookShelve : listBookShelves) {
             System.out.println("BookShavle code: " + bookShelve.getCode() + ", type: " + bookShelve.getType());

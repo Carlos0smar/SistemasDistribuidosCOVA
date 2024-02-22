@@ -15,6 +15,6 @@ public class Schema {
                     "author VARCHAR(255)," +
                     "editorial VARCHAR(255)," +
                     "year YEAR," +
-                    "code_book_shelve VARCHAR(50)" +
+                    "id_book_shelve INT" +
                     ")";
 }
