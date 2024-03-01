@@ -6,13 +6,17 @@ package org.example;
  */
 
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
+
+import static java.lang.Integer.parseInt;
 
 
 /**
@@ -25,20 +29,17 @@ public class ClienteTCP {
             Scanner sc=new Scanner(System.in);
             int port = 5002;
             try {
-                Socket client = new Socket("172.23.23.45", port);
+                Socket client = new Socket("localhost", port);
+
                 PrintStream toServer = new PrintStream(client.getOutputStream());
                 BufferedReader fromServer = new BufferedReader(
                         new InputStreamReader(client.getInputStream()));
-
                 while(true){
                     System.out.println("Introducir el mensaje a enviar al servidor:");
                     String cadena=sc.nextLine();
                     toServer.println(cadena);
                     String result = fromServer.readLine();
-                    System.out.println("Milton: " + result);
-                    if(result.equals("Adios")){
-                        break;
-                    }
+                    System.out.println("El resultado es: " + result);
                 }
 
             } catch (IOException ex) {
@@ -48,4 +49,6 @@ public class ClienteTCP {
         }
 
     }
+
+
 }
