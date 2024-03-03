@@ -28,7 +28,7 @@ public class ClienteTCP {
                 BufferedReader fromServer = new BufferedReader(
                         new InputStreamReader(client.getInputStream()));
 
-                System.out.println("Upload a file:");
+                System.out.println("Escriba enivar o solicitar:");
                 String cadena=sc.nextLine();
                 if (cadena.equals("enviar")) {
                     enviarArchivo(toServer, client);

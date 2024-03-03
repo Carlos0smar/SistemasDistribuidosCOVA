@@ -47,9 +47,6 @@ public class ServerTCP {
                 enviarArchivo(toClient, fromClient, client);
             }
 
-//                toClient.println(resul);
-
-
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -61,7 +58,6 @@ public class ServerTCP {
         // Leer nombre del archivo y su tamaño
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String nombreArchivo = reader.readLine();
-//        long tamanoArchivo = Long.parseLong(in.readLine());
 
         // Crear stream de salida para escribir el archivo
         FileOutputStream fos = new FileOutputStream(DIRECTORIO + File.separator + nombreArchivo);
@@ -97,8 +93,6 @@ public class ServerTCP {
         fis.read(buffer, 0, buffer.length);
         OutputStream os = sc.getOutputStream();
         os.write(buffer, 0, buffer.length);
-
-
 
         // Cerrar streams
         fis.close();
