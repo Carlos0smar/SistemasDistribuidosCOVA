@@ -1,4 +1,4 @@
-package org.ejercicio_1;
+package org.example;
 
 
 import java.io.BufferedReader;
@@ -26,7 +26,9 @@ public class ClienteTCP {
                 BufferedReader fromServer = new BufferedReader(
                         new InputStreamReader(client.getInputStream()));
                 while(true){
-                    System.out.println("Si quieres sumar pon sumar:");
+                    System.out.println("Para recibir el ejercicio Introducir iniciar:suma");
+                    System.out.println("Para mandar la respuesta respuesta:(valor de la suma) ");
+
                     String cadena=sc.nextLine();
                     toServer.println(cadena);
                     String result = fromServer.readLine();

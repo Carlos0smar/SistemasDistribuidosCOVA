@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package org.ejercicio_1;
+package org.example;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,10 +45,6 @@ public class ServerTCP {
                 toClient = new PrintStream(client.getOutputStream());
                 toClient.println(exercise);
 
-                String resultadoExercise = fromClient.readLine();
-                String resltadoVerificado = verifyExercise(resultadoExercise, correctValue());
-                toClient.println(resltadoVerificado);
-
             }
 
         } catch (IOException ex) {
@@ -71,27 +67,27 @@ public class ServerTCP {
     }
 
 
-    public static String verifyExercise(String resutado, long correctValue){
+    public static boolean verifyExercise(String resutado, long correctValue){
         if(Integer.parseInt(resutado) == correctValue){
-            return "The answer is correct";
-        } else {
-            return "The answer is wrong";
+            return true;
         }
+        return false;
     }
 
     public static String procesarPeticion(String cadena){
         String[] comando = cadena.split(":");
-        if(comando[0].equals("inicar")){
+        if(comando[0].equals("iniciar")){
             num1= generateRandomExercise();
             num2= generateRandomExercise();
-            String responseExercise = generateExercise();
+            String responseExercise = "Ej:" + generateExercise();
             return responseExercise;
         }
 
-        int resultado = Integer.parseInt(comando[1]);
-        if(resultado)
+        if(comando[0].equals("respuesta")){
 
+            return verifyExercise(comando[1], correctValue()) ? "Respuesta correcta" : "respuesta incorrecta";
         }
+        return "Comando no valido";
     }
 
 
