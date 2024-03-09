@@ -26,18 +26,15 @@ public class ClienteTCP {
                 BufferedReader fromServer = new BufferedReader(
                         new InputStreamReader(client.getInputStream()));
                 while(true){
-                    System.out.println("Para recibir el ejercicio Introducir iniciar:suma");
-                    System.out.println("Para mandar la respuesta respuesta:(valor de la suma) ");
-
+                    menu();
                     String cadena=sc.nextLine();
-                    toServer.println(cadena);
+                    String valor =  protocoloManager(cadena);
+                    toServer.println(valor);
+
                     String result = fromServer.readLine();
+
                     System.out.println(result);
-                    System.out.println("Introduzca la respuesta");
-                    String cadenaResultado=sc.nextLine();
-                    toServer.println(cadenaResultado);
-                    String resultadoFromServer = fromServer.readLine();
-                    System.out.println(resultadoFromServer);
+
                 }
 
             } catch (IOException ex) {
@@ -48,5 +45,36 @@ public class ClienteTCP {
 
     }
 
+    public static void menu(){
+        System.out.println("1. Suma");
+        System.out.println("2. Para introducir una respuesta");
+        System.out.println("3. Exit");
+    }
+
+    public static String protocoloManager(String received){
+
+        switch (received) {
+            case "1":
+                return responseExercise("suma");
+            case "2":
+                return responseRespuesta();
+            case "3":
+                return "Exit";
+            default:
+                return "";
+        }
+    }
+
+    public static String responseExercise(String received){
+        return "iniciar:" + received;
+    }
+
+
+    public static String responseRespuesta(){
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Escriba el resultado de la suma");
+        String resul = scn.next();
+        return "respuesta:" + resul;
+    }
 
 }

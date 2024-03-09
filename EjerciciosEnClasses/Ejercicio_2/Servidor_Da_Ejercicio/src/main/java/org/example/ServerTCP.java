@@ -25,6 +25,8 @@ public class ServerTCP {
      */
     static long num1;
     static long num2;
+    static PrintStream toClient;
+    static BufferedReader fromClient;
     public static void main(String[] args) {
 
 
@@ -35,16 +37,13 @@ public class ServerTCP {
             server = new ServerSocket(port);
             System.out.println("Se inicio la calculadora con éxito");
             Socket client;
-            PrintStream toClient;
             client = server.accept(); //conexion entre cliente y servidor para comunicacion bidireccional
-            BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream())); // el lector
+            fromClient = new BufferedReader(new InputStreamReader(client.getInputStream())); // el lector
+            toClient = new PrintStream(client.getOutputStream());
             System.out.println("Cliente se conecto");
             while (true){
                 String recibido=fromClient.readLine();
-                String exercise = procesarPeticion(recibido);
-                toClient = new PrintStream(client.getOutputStream());
-                toClient.println(exercise);
-
+                validarEntrada(recibido);
             }
 
         } catch (IOException ex) {
@@ -53,19 +52,47 @@ public class ServerTCP {
 
     }
 
-    public static String generateExercise(){
-        String exercise = ( num1 + "+" + num2);
-        return exercise;
+    public static void validarEntrada(String received) {
+        String[] parts = divideString(received);
+        if(parts[0].equals("iniciar")){
+            operation(parts[1]);
+        }
+
+        if(parts[0].equals("respuesta")){
+            if(verifyExercise(parts[1] , correctValue())){
+                toClient.println("Respuesta correcta");
+            } else {
+                toClient.println("Respuesta incorrecta");
+            }
+        }
+
     }
+
+    public static void operation(String operation) {
+        switch (operation){
+            case "suma":
+                num1 = generateRandomExercise();
+                num2 = generateRandomExercise();
+                generateExercise();
+                toClient.println("Ej: " + generateExercise());
+                break;
+        }
+    }
+
 
     public static long generateRandomExercise(){
         return Math.round(Math.random() * 100);
     }
 
+
     public static long correctValue(){
         return num1 + num2;
     }
 
+    public static String generateExercise(){
+        String exercise = ( num1 + "+" + num2);
+        return exercise;
+    }
 
     public static boolean verifyExercise(String resutado, long correctValue){
         if(Integer.parseInt(resutado) == correctValue){
@@ -73,22 +100,9 @@ public class ServerTCP {
         }
         return false;
     }
-
-    public static String procesarPeticion(String cadena){
-        String[] comando = cadena.split(":");
-        if(comando[0].equals("iniciar")){
-            num1= generateRandomExercise();
-            num2= generateRandomExercise();
-            String responseExercise = "Ej:" + generateExercise();
-            return responseExercise;
-        }
-
-        if(comando[0].equals("respuesta")){
-
-            return verifyExercise(comando[1], correctValue()) ? "Respuesta correcta" : "respuesta incorrecta";
-        }
-        return "Comando no valido";
+    static String[] divideString(String cadena){
+        String[] parts = cadena.split(":");
+        return parts;
     }
-
 
 }
