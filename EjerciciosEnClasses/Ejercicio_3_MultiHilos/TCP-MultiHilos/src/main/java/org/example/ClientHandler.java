@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler extends Thread {
     long num1;
@@ -23,12 +24,12 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         String received;
-        String toreturn;
+
         while (true) {
             try {
 
                 // Ask user what he wants
-                dos.writeUTF("Introducir Suma, si quiere sumar");
+                dos.writeUTF("Escoge una opcion");
 
                 // receive the answer from client
                 received = dis.readUTF();
@@ -41,29 +42,8 @@ public class ClientHandler extends Thread {
                     break;
                 }
 
-                // creating Date object
-//                Date date = new Date();
-
-                // write on output stream based on the
-                // answer from the client
                 validarEntrada(received);
-                
-//                switch (divideString(received)) {
-//
-//                    case "Sum":
-////                        toreturn = fordate.format(date);
-//                        dos.writeUTF(toreturn);
-//                        break;
-//
-//                    case "Time":
-////                        toreturn = fortime.format(date);
-//                        dos.writeUTF(toreturn);
-//                        break;
-//
-//                    default:
-//                        dos.writeUTF("Invalid input");
-//                        break;
-//                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,33 +59,40 @@ public class ClientHandler extends Thread {
         }
     }
 
-    public void validarEntrada(String received){
+
+    public void validarEntrada(String received) throws IOException {
         String[] parts = divideString(received);
-        if(parts[1].equals("iniciar")){
-            operation(parts[2]);
+        if(parts[0].equals("iniciar")){
+            operation(parts[1]);
         }
 
-        if(parts[1].equals("respuesta")){
-            verifyExercise(parts[2] , correctValue());
+        if(parts[0].equals("respuesta")){
+            if(verifyExercise(parts[1] , correctValue())){
+                dos.writeUTF("Respuesta correcta");
+            } else {
+                dos.writeUTF("Respuesta incorrecta");
+            }
         }
 
     }
-    public void operation(String operation){
+    public void operation(String operation) throws IOException {
         switch (operation){
             case "suma":
                 num1 = generateRandomExercise();
                 num2 = generateRandomExercise();
                 generateExercise();
-                dos.writeUTF("El ejercicio es: " + generateExercise());\
+                dos.writeUTF("Ej: " + generateExercise());
                 break;
         }
     }
+
 
     public long generateRandomExercise(){
         return Math.round(Math.random() * 100);
     }
 
-    public long correctValue(){
+
+    public long correctValue (){
         return num1 + num2;
     }
 
@@ -124,4 +111,5 @@ public class ClientHandler extends Thread {
         String[] parts = cadena.split(":");
         return parts;
     }
+
 }
