@@ -1,7 +1,0 @@
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.csproj.AssemblyReference.cache
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.Form1.resources
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.csproj.GenerateResource.cache
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.GeneratedMSBuildEditorConfig.editorconfig
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.AssemblyInfoInputs.cache
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.AssemblyInfo.cs
-E:\University\7mo_Semestre\Sistemas_Distribuidos\code\SistemasDistribuidosCOVA\Laboratorios\Laboratorio_6\juez\juez\obj\Debug\net6.0-windows\juez.csproj.CoreCompileInputs.cache
